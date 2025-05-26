@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "726242299560",
+    "project_id": "mood-treacker",
+    "storage_bucket": "mood-treacker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726242299560:android:b1f54986536be674c27c9d",
+        "android_client_info": {
+          "package_name": "com.example.mood_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_4ov-TULZD0Yj4NGyl_O3pOeCQPjI0OE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726242299560:android:e66d7c5e558e8a7bc27c9d",
+        "android_client_info": {
+          "package_name": "mood.tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_4ov-TULZD0Yj4NGyl_O3pOeCQPjI0OE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
