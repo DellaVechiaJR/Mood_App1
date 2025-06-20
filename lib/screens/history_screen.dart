@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'edit_mood_screen.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -66,6 +67,7 @@ class HistoryScreen extends StatelessWidget {
                   leading: CircleAvatar(
                     backgroundColor: getMoodColor(mood['emotion']),
                     child: Text(
+                      // Exibe só o primeiro caractere (emoji) ou inicial do texto
                       mood['emotion'][0],
                       style: const TextStyle(color: Colors.white),
                     ),
@@ -77,6 +79,70 @@ class HistoryScreen extends StatelessWidget {
                       if (mood['description'].toString().isNotEmpty)
                         Text(mood['description']),
                       Text(formattedDate, style: const TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Botão de editar
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => EditMoodScreen(
+                                    docId: mood.id,
+                                    initialEmotion: mood['emotion'],
+                                    initialDescription: mood['description'],
+                                  ),
+                            ),
+                          );
+                        },
+                      ),
+                      // Botão de excluir
+                      IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        onPressed: () async {
+                          final confirm = await showDialog<bool>(
+                            context: context,
+                            builder:
+                                (context) => AlertDialog(
+                                  title: const Text('Confirmar exclusão'),
+                                  content: const Text(
+                                    'Tem certeza que deseja excluir este registro?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed:
+                                          () => Navigator.pop(context, false),
+                                      child: const Text('Cancelar'),
+                                    ),
+                                    TextButton(
+                                      onPressed:
+                                          () => Navigator.pop(context, true),
+                                      child: const Text(
+                                        'Excluir',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                          );
+                          if (confirm == true) {
+                            await FirebaseFirestore.instance
+                                .collection('moods')
+                                .doc(mood.id)
+                                .delete();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Registro excluído!'),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
